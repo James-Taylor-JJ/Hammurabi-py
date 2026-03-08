@@ -61,6 +61,7 @@ def askHowMuchGrainToFeedPeople(self, bushels, population):
         if  decision_3 == "yes":
             print(f"Very well, Sire. We will devote all {feed} bushels of grain in storage to feeding your people this year. I pray that you do not come to regret this decision.")
             self.bushels = bushels - feed
+            self.rations = feed
             return feed
         else:
             print(f"A wise decision, My Lord.")
@@ -70,6 +71,7 @@ def askHowMuchGrainToFeedPeople(self, bushels, population):
         if decision == "yes":
             print(f"Very well, Sire. We will only devote {feed} bushels of grain to the nourishment of your people this year. I pray that you do not come to regret this decision.")
             self.bushels = bushels - feed
+            self.rations = feed
             return feed
         else:
             print(f"I am most relieved that you have reconsidered, My Lord.")
@@ -80,6 +82,7 @@ def askHowMuchGrainToFeedPeople(self, bushels, population):
         if decision_2 == "yes":
             print(f"As you wish, Sire. We will shall proceed with austerity measures, as you have instructed. I have instructed the royal steward to distribute no more than {feed} from the grain stores.")
             self.bushels = bushels - feed
+            self.rations = feed
             return feed
         else: 
             print(f"You are most wise, My Lord.")
@@ -87,6 +90,7 @@ def askHowMuchGrainToFeedPeople(self, bushels, population):
     else:
         print(f"As you command, My Liege. I shall inform the royal steward that he is authorized to distribute up to {feed} bushels of grain to the citizen of the city.")
         self.bushels = bushels - feed
+        self.rations = feed
         return feed
     
 def askHowManyAcresToPlant(self, acresOwned, population, bushels):
