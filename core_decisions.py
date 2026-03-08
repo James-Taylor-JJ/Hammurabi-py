@@ -93,25 +93,28 @@ def askHowManyAcresToPlant(self, acresOwned, population, bushels):
     acresOwned = self.acres
     population = self.people
     bushels = self.bushels
+    maxAcresToPlant = min(acresOwned, population * 10, bushels // 2)
    
-    plant = int(input(f"Your Majesty, in addition the {self.acres} acres of land that you possess, you have {self.people} subjects, and {self.bushels} bushels of grain in storage. How many acres do you wish to plant with seed this year?"))
-    if plant > acresOwned:
-        print(f"My Lord, you do not have {plant} acres of land to plant ... . Please decide on a smaller number.")
-        return self.askHowManyAcresToPlant(acresOwned, population, bushels)
-    elif plant < acresOwned:
-        print(f"Very well, Sire.")
-        self.acres = acresOwned - plant
-        return plant
-    elif plant == acresOwned:
-        print(f"My Lord, you do not have enough grain to plant {plant} acres of land. Please decide on a smaller number.")
-        return self.askHowManyAcresToPlant(self)
-    
-    
-    else:
-        
-        self.bushels = bushels - (plant * 2)
-        return plant
-    
-    deploy = int(input(fYour ))
-
-    seed = int(input(f))
+    while True:
+        plant = int(input(f"Your Majesty, in addition the {self.acres} acres of land that you possess, you have {self.people} subjects, and {self.bushels} bushels of grain in storage. Bearing in mind that each acre planted requires 2 bushels of grain and one person can only farm 10 acres, how many acres do you wish to plant with seed this year?"))
+        if plant < 0:
+            print(f"Most amusing my Leige. However, are you certain that you wish to forgo planting any of your land this year? (yes/no) ")
+            decision = input().lower()
+            if decision == "yes":
+                print(f"Very well, Sire. We will not plant any land this year.")
+                return 0
+            else:
+                continue
+        elif plant > self.acres:
+            print(f"My Lord, you do not have {plant} acres of land to plant. Please choose a smaller number.")
+            continue
+        elif plant > (population * 10):
+            print(f"Your Majesty, you have only {population} subjects, and each can only farm 10 acres of land. Let us Please choose a smaller number.")
+            continue
+        elif plant > (bushels // 2):
+            print(f"Your Majesty, you do not have enough grain in storage to plant {plant} acres of land. Please choose a smaller number.")
+            continue
+        else:            
+            self.bushels = bushels - (plant * 2)
+            print(f"Very good, Sire. {plant} bushels shall be sown this year. After planting {plant} acres of land with seed, we have {self.bushels} bushels of grain left in storage.")
+            return plant
