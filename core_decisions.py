@@ -13,7 +13,7 @@ def askHowManyAcresToBuy(self, price, bushels):
         return buy
     elif buy * price > bushels:
         print(f"Your Majesty, you do not have enough grain to buy {buy} acres of land. A smaller number is required.")
-        return self.askHowManyAcresToBuy(self)
+        return self.askHowManyAcresToBuy(price, bushels)
     elif buy * price == bushels:
         print(f"Your Majesty, you have just enough grain to buy {buy} acres of land. This will leave you with no grain in storage. Are you certain you wish to pursue this policy? (yes/no) ")
         choice = input().lower()
@@ -22,7 +22,7 @@ def askHowManyAcresToBuy(self, price, bushels):
             self.acres = self.acres + buy
             return buy
         else:
-            return self.askHowManyAcresToBuy()
+            return self.askHowManyAcresToBuy(price, bushels)
      
 def askHowManyAcresToSell(self, acresOwned):
     acresOwned = self.acres

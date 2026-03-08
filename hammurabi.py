@@ -16,6 +16,7 @@ class Hammurabi:
         self.plague_deaths = 0
         self.starvation_deaths = 0
         self.immigrants_in = 0
+        self.sown = 0
         self.harvest_amount = 0
         self.yield_per_acre = 0
         self.rat_damage = 0
@@ -49,7 +50,7 @@ class Hammurabi:
             if self.uprising(self.people, self.starvation_rate):
                 break
             self.immigrants(self.people, self.acres, self.bushels)
-            self.harvest(self.acres, self.rations)
+            self.harvest(self.sown)
             self.grainEatenByRats(self.bushels)
             self.newCostOfLand()
             # Deliver End of Year Summary
@@ -172,6 +173,7 @@ class Hammurabi:
                 continue
             else:            
                 self.bushels = bushels - (plant * 2)
+                self.sown = plant
                 print(f"Very good, Sire. {plant} bushels shall be sown this year. After planting {plant} acres of land with seed, we have {self.bushels} bushels of grain left in storage.")
                 return plant
         
@@ -219,9 +221,10 @@ class Hammurabi:
             print(f"My Lord, due to the starvation of {self.starvation_rate}% of your people, no immigrants emigrated to your city this year.")
             return 
 
-    def harvest(self, acres, bushelsUsedAsSeed):
+    def harvest(self, bushelsUsedAsSeed):
+        bushelsUsedAsSeed = self.sown
         yield_per_acre = self.rand.randint(1, 6)
-        harvest = acres * yield_per_acre
+        harvest = bushelsUsedAsSeed * yield_per_acre
         self.harvest_amount = harvest
         self.bushels = self.bushels + harvest
         self.yield_per_acre = yield_per_acre
@@ -231,7 +234,7 @@ class Hammurabi:
         bushels = self.bushels
         if self.rand.random() < 0.40:
             percentEaten = self.rand.randint(10, 30)
-            eaten = bushels * (percentEaten / 100)
+            eaten = (bushels * percentEaten) // 100
             self.rat_damage = eaten
             self.bushels = bushels - eaten
             print(f"My Lord, the city was smitten by a rat infestation this year. The vermin have reduced the grain in your granaries by {percentEaten}%, which amounts to {eaten} bushels.")
